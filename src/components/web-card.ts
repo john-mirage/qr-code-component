@@ -22,8 +22,8 @@ class WebCard extends HTMLElement {
     this.titleElement.textContent = "Improve your front-end skills by building projects";
     this.descriptionElement.setAttribute("class", "text-body font-body tracking-body text-grayish-blue");
     this.descriptionElement.textContent = "Scan the QR code to visit Frontend Mentor and take your coding skills to the next level";
-    this.handleImageMouse = this.handleImageMouse.bind(this);
-    this.handleImageKeyboard = this.handleImageKeyboard.bind(this);
+    this.openLightbox = this.openLightbox.bind(this);
+    this.handleKeyUp = this.handleKeyUp.bind(this);
   }
 
   connectedCallback() {
@@ -33,20 +33,16 @@ class WebCard extends HTMLElement {
       this.initialCall = false;
     }
     gsap.to(this, {opacity: 1, transform: "none", duration: 0.5});
-    this.imageElement.addEventListener("click", this.handleImageMouse);
-    this.imageElement.addEventListener("keyup", this.handleImageKeyboard);
+    this.imageElement.addEventListener("click", this.openLightbox);
+    this.imageElement.addEventListener("keyup", this.handleKeyUp);
   }
 
   disconnectedCallback() {
-    this.imageElement.removeEventListener("click", this.handleImageMouse);
-    this.imageElement.removeEventListener("keyup", this.handleImageKeyboard);
+    this.imageElement.removeEventListener("click", this.openLightbox);
+    this.imageElement.removeEventListener("keyup", this.handleKeyUp);
   }
 
-  handleImageMouse() {
-    this.openLightbox();
-  }
-
-  handleImageKeyboard(event: KeyboardEvent) {
+  handleKeyUp(event: KeyboardEvent) {
     if (event.key === "Enter") {
       this.openLightbox();
     }
